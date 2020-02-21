@@ -8,6 +8,7 @@ const typeDefs = gql`
     rocket: Rocket
     isBooked: Boolean!
   }
+  
   type Rocket {
     id: ID!
     name: String
