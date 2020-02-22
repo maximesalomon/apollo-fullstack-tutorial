@@ -8,7 +8,7 @@ const typeDefs = gql`
     rocket: Rocket
     isBooked: Boolean!
   }
-  
+
   type Rocket {
     id: ID!
     name: String
@@ -23,7 +23,7 @@ const typeDefs = gql`
 
   type Mission {
     name: String
-    missionPatch(size: PatchSize): String
+    missionPatch(mission: String, size: PatchSize): String
   }
 
   enum PatchSize {
@@ -32,15 +32,21 @@ const typeDefs = gql`
   }
 
   type Query {
-    launches: [Launch]!
+    launches(pageSize: Int, after: String): LaunchConnection!
     launch(id: ID!): Launch
     me: User
+  }
+
+  type LaunchConnection {
+    cursor: String!
+    hasMore: Boolean!
+    launches: [Launch]!
   }
 
   type Mutation {
     bookTrips(launchIds: [ID]!): TripUpdateResponse!
     cancelTrip(launchId: ID!): TripUpdateResponse!
-    login(email: String): String # login token
+    login(email: String): String
   }
 
   type TripUpdateResponse {
